@@ -23,3 +23,14 @@ class PurePursuitLaneController:
         self.parameters = parameters
 
 
+    def pure_pursuit(self):
+        
+        hypothenuse = np.sqrt(self.parameters["target"].dot(self.parameters["target"]))
+        sin_alpha = self.parameters["target"][1] / hypothenuse
+        min_speed = 0.1
+        max_speed = 1.0
+        v = self.parameters["max_velocity"] * (1 - abs(sin_alpha))
+        v = np.clip(v, min_speed, max_speed)
+        omega = 2 * sin_alpha / self.parameters["lookahead_dist"]
+        
+        return v,omega
