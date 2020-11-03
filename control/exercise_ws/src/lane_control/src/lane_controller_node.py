@@ -190,7 +190,7 @@ class LaneControllerNode(DTROS):
                 #self.target = (white_centroid + yellow_centroid) / 2
                 #self.target[1] += 0.1
             """
-            if self.counting_points(Color.YELLOW) > self.counting_points(Color.WHITE): 
+            if self.counting_points(Color.YELLOW) !=0 and self.pose_msg.phi > 0: 
                 #> self.counting_points(Color.WHITE)
                 yellow_centroid = self.calculate_centroid(Color.YELLOW)
                 self.target = yellow_centroid
@@ -198,16 +198,16 @@ class LaneControllerNode(DTROS):
                 #print("TARGET 1Y: ",self.target)
                 self.target[1] -= self.offset # moving the follow(target) point to the right.
                 #print("CONDITION TRUE")
-            else:
+            elif self.counting_points(Color.WHITE) !=0 and self.pose_msg.phi < 0:
                 white_centroid = self.calculate_centroid(Color.WHITE)
                 self.target = white_centroid
                 print("CONDITION 2:")
                 #print("TARGET 1W: ",self.target)
                 self.target[1] += self.offset # moving the follow(target) point to the left.
                 #print("PRINTING TARGET: ",target)
-            """else:
+            else:
                 print("CONDITION 3")
-                self.target[1] = self.target[1] # same follow(target) point."""
+                self.target[1] = self.target[1] # same follow(target) point.
         #print("SEGMENT COLOR WHITE: ", Segment.WHITE)
         #print("SEGMENT COLOR YELLOW: ", Segment.YELLOW)
         #print("SEGMENT COLOR RED: ", Segment.RED)
